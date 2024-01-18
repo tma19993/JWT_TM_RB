@@ -1,0 +1,14 @@
+{
+  "name": "laby_spec",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000J\u0000W\u0000T\u0000_\u0000T\u0000M\u0000_\u0000R\u0000B\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
