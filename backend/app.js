@@ -53,6 +53,24 @@ app.post('/addTrack', function(req, res){
     });
 });
 
+app.post('/login', function(req, res){
+    res.send('Endpoint post req')
+    console.log(req.body);
+    // const data = req.body;
+    // const sql = 'INSTER INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
+    // const params = [data.title, data.artist, data.album, data.genre, data.time];
+
+    // db.run(sql, params, function(err){
+    //     if (err){
+    //         res.status(400).json({error: err.message });
+    //         return;
+    //     }
+    //     res.json({
+    //         message: 'Dane dodane do music.db',
+    //         id: this.lastID,
+    //     });
+    // });
+});
 app.listen(port, ()=> {
     console.log(`App słucha http://loclhost:${port}`)
 })
