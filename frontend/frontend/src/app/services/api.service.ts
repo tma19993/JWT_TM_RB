@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { EmailValidator } from '@angular/forms';
 import { EMPTY, Observable, catchError } from 'rxjs';
 
 @Injectable({
@@ -16,5 +17,8 @@ export class ApiService {
       console.log(err)
       return EMPTY;
     }))
+  }
+  public login(login: string, password: string):Observable<any>{
+    return this.http.post(`${this.url}/login`,{login,password});
   }
 }

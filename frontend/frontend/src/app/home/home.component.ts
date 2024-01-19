@@ -18,8 +18,7 @@ export class HomeComponent implements OnInit{
         console.log(val);
       })
     }
-  public goToLoginPage(): void{
-    console.log("object");
+  public goToLoginPage(): void {
     this.router.navigate(['/login-page']);
   }
 }

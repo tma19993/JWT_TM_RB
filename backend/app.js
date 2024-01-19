@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 
 app.get('/data', function(req, res){ res.send(data)})
 
-app.post('/endpoint', function(req, res){
+app.post('/addTrack', function(req, res){
     res.send('Endpoint post req')
     const data = req.body;
     const sql = 'INSTER INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
