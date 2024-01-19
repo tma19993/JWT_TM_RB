@@ -9,8 +9,8 @@ export class ApiService {
 
   constructor(public http: HttpClient) { }
 
-  private url: string = "http://localhost:3000/";
-  
+  private url: string = "http://localhost:3000";
+
   public getData():Observable<any>{
     return this.http.get(`${this.url}/data`).pipe(catchError(err=>{
       console.log(err)

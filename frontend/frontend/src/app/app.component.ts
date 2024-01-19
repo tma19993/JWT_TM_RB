@@ -6,19 +6,4 @@ import { ApiService } from './services/api.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
-
-  constructor(
-    public router: Router,
-    public apiService: ApiService
-    ){}
- public  ngOnInit(): void {
-    this.apiService.getData().subscribe(val=>{
-      console.log(val);
-    })
-  }
-
-  public goToLoginPage(): void{
-    this.router.navigate
-  }
-}
+export class AppComponent{}
