@@ -79,7 +79,7 @@ stmt.run('CIOS (prod. Jonatan, Gibbs)', 'Gibbs', 'SAFE', 'RAP', '03:31');
   stmt.finalize();
 
   // Wyświetlenie zawartości tabeli
-  dbmusic.each('SELECT * FROM tracks', (err, row) => {
+  dbmusic.each('SELECT * FROM tracks', (_err: any, row: any) => {
     console.log(row);
   });
 });
