@@ -28,7 +28,7 @@ db.serialize(() => {
   stmt.finalize();
 
   // Wyświetlenie zawartości tabeli
-  db.each('SELECT * FROM users', (err, row) => {
+  db.each('SELECT * FROM users', (_err: any, row: any) => {
     console.log(row);
   });
 });
