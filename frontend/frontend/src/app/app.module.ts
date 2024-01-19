@@ -7,16 +7,20 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { InfoComponent } from './info/info.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
-    InfoComponent
+    InfoComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
