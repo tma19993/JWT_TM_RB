@@ -21,15 +21,6 @@ db.all(`SELECT * FROM tracks`,[],(err, rows) => {
     data = rows;
 })
 
-
-db.close((err) => {
-    if (err) {
-        console.error(err.message);
-    }
-    console.log('Zamknięto połączenie z bazą danych.');
-});
-
-
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -61,7 +52,6 @@ app.post('/endpoint', function(req, res){
         });
     });
 });
-
 
 app.listen(port, ()=> {
     console.log(`App słucha http://loclhost:${port}`)
