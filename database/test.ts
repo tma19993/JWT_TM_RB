@@ -25,10 +25,12 @@ db.serialize(() => {
   `);
 
   stmt.run('John', 'Doe', 'john_doe', 'securePassword', 'john.doe@example.com', '123456789', 0);
+  stmt.run('Adam', 'kowalski', 'adm24', 'haslo', 'john.doe@example.com', '123456789', 1);
   stmt.finalize();
 
   // Wyświetlenie zawartości tabeli
   db.each('SELECT * FROM users', (_err: any, row: any) => {
+    if(!_err)
     console.log(row);
   });
 });

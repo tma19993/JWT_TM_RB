@@ -23,15 +23,20 @@ export class ApiService {
       })
     );
   }
-  public login(username: string, password: string): Observable<any> {
-    return this.http
-      .post<any>(`${this.url}/login`, { username, password }, this.httpOptions)
+
+  public addUser(data: any):Observable<any>{
+    console.log(data);
+    return this.http.post<any>(`${this.url}/addUser`,data, this.httpOptions)
+    // return this.http.post<any>(`${this.url}/addUser`, data,  this.httpOptions);
+  }
+
+  public login(login: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.url}/login`, { login, password }, this.httpOptions)
       .pipe(tap((res) => this.setToken(res.token)));
   }
 
   public isLoggedIn(): boolean {
-    const token = localStorage.getItem('token'); // Zakładając, że token jest przechowywany w localStorage
-    // Tutaj możesz dodać więcej logiki, np. sprawdzenie ważności tokenu
+    const token = localStorage.getItem('token');
     return !!token;
   }
   private setToken(token: string) {

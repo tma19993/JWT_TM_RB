@@ -12,11 +12,11 @@ export class AuthGuard implements CanActivate{
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    const isLoggedIn = this.apiService.isLoggedIn(); // Implementuj tę metodę w AuthService
+    const isLoggedIn = this.apiService.isLoggedIn(); 
     if (isLoggedIn) {
         return true;
     } else {
-        this.router.navigate(['/login-page']); // Przekieruj do logowania, jeśli użytkownik nie jest zalogowany
+        this.router.navigate(['/login-page']);
         return false;
     }
   }

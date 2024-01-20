@@ -7,17 +7,12 @@ import { ApiService } from '../services/api.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent{
 
   constructor(
     public router: Router,
     public apiService: ApiService
     ){}
-    public  ngOnInit(): void {
-      this.apiService.getData().subscribe(val=>{
-        console.log(val);
-      })
-    }
   public goToLoginPage(): void {
     this.router.navigate(['/login-page']);
   }

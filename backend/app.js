@@ -3,11 +3,18 @@ const app = express();
 const bodyParser = require('body-parser');
 var createError = require('http-errors');
 var path = require('path');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 var cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 let data; 
+let users;
 const port = 3000;
 
+
+function findUser(login, password) {
+    return users.find(user => user.login == login && user.haslo == password);
+  }
 
 let db = new sqlite3.Database('../database/music.db', (err) => {
     if (err) {
@@ -21,6 +28,20 @@ db.all(`SELECT * FROM tracks`,[],(err, rows) => {
     }
     data = rows;
 })
+let dbusers = new sqlite3.Database('../database/users.db', (err) => {
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Połączono z bazą danych.');
+});
+
+dbusers.all(`SELECT * FROM users`,[],(err, rows) => {
+    if (err) {
+        console.error(err.message);
+    }
+    users = rows;
+})
+
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -37,10 +58,17 @@ app.use((req, res, next) => {
 
 app.get('/data', function(req, res){ res.send(data)})
 
+app.post('/addUser', (req, res) => {
+    const userData = req.body;
+    console.log("object");
+    const canAddUser = users.find(userData);
+    console.log(canAddUser);
+  console.log(userData); 
 
-app.post("/GetRatio", (req, res) => {
-console.log(req);
-})
+  res.status(201).send({ message: 'Użytkownik został dodany' });
+});
+
+
 app.post('/addTrack', function(req, res){
     res.send('Endpoint post req')
     const data = req.body;
@@ -59,14 +87,18 @@ app.post('/addTrack', function(req, res){
     });
 });
 
-app.post('/login', (req, res) => {
-    // Tutaj do napisania strzał na bazę i sprawdzenia danych czy pobranych czy zgadzają się z danymi z bazy
-    // Weryfikuj dane logowania użytkownika, np. za pomocą bazy danych
-    // Jeśli dane są poprawne:
-    const user = { id: userFromDb.id, name: userFromDb.name }; // Przykładowy użytkownik
-    const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '2h' }); // Generowanie tokenu
 
-    res.json({ token: token }); // Wysyłanie tokenu do klienta
+
+app.post('/login', (req, res) => {
+    const user = req.body;
+    const foundUser = findUser(user.login, user.password);
+    if(foundUser){
+        const token = jwt.sign(user, config.SECRET, { expiresIn: '2h' }); // Generowanie tokenu
+        res.json({ token: token, isAdmin: Boolean(Number(foundUser.czyAdmin))}); // Wysyłanie tokenu do klienta
+    }
+    else{
+        res.status(401).json({ message: 'Logowanie nieudane' });
+    }
 });
 
 app.listen(port, ()=> {

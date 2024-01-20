@@ -1,0 +1,31 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="imie">Imię:</label>
+      <input type="text" id="imie" formControlName="imie">
+    </div>
+    <div>
+      <label for="nazwisko">Nazwisko:</label>
+      <input type="text" id="nazwisko" formControlName="nazwisko">
+    </div>
+    <div>
+      <label for="login">Login:</label>
+      <input type="text" id="login" formControlName="login">
+    </div>
+    <div>
+      <label for="haslo">Hasło:</label>
+      <input type="password" id="haslo" formControlName="haslo">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+    </div>
+    <div>
+      <label for="telefon">Telefon:</label>
+      <input type="tel" id="telefon" formControlName="telefon">
+    </div>
+    <div>
+      <label for="czyAdmin" style="margin-right: 10px;font-size: 18px;">Czy Admin:</label>
+      <input type="checkbox" id="czyAdmin" formControlName="czyAdmin">
+    </div>
+    <button type="submit">Dodaj użytkownika</button>
+  </form>
