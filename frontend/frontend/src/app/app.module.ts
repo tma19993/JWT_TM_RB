@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +19,8 @@ import { HomeComponent } from './home/home.component';
     HomeComponent
   ],
   imports: [
+    FormsModule,
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

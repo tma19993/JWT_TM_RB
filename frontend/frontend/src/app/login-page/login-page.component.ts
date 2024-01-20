@@ -7,9 +7,20 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
+  public username: string = "";
+  public password: string = "";
+
 constructor( public apiService: ApiService){}
 
-public login():void{
-  this.apiService.login("adam","password");
+public onSubmit(): void{
+  this.apiService.login(this.username, this.password).subscribe(
+    data => {
+        console.log('Logowanie zakończone sukcesem', data);
+        // Tutaj możesz przekierować użytkownika, zapisać token itp.
+    },
+    error => {
+        console.error('Błąd logowania', error);
+    }
+)
 }
 }

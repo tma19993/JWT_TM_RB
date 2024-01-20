@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -31,14 +32,19 @@ app.use((req, res, next) => {
     );
     next();
   });
-
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/data', function(req, res){ res.send(data)})
 
+
+app.post("/GetRatio", (req, res) => {
+console.log(req);
+})
 app.post('/addTrack', function(req, res){
     res.send('Endpoint post req')
     const data = req.body;
-    const sql = 'INSTER INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
     const params = [data.title, data.artist, data.album, data.genre, data.time];
 
     db.run(sql, params, function(err){
@@ -53,25 +59,17 @@ app.post('/addTrack', function(req, res){
     });
 });
 
-app.post('/login', function(req, res){
-    res.send('Endpoint post req')
-    console.log(req.body);
-    // const data = req.body;
-    // const sql = 'INSTER INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
-    // const params = [data.title, data.artist, data.album, data.genre, data.time];
+app.post('/login', (req, res) => {
+    // Tutaj do napisania strzał na bazę i sprawdzenia danych czy pobranych czy zgadzają się z danymi z bazy
+    // Weryfikuj dane logowania użytkownika, np. za pomocą bazy danych
+    // Jeśli dane są poprawne:
+    const user = { id: userFromDb.id, name: userFromDb.name }; // Przykładowy użytkownik
+    const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: '2h' }); // Generowanie tokenu
 
-    // db.run(sql, params, function(err){
-    //     if (err){
-    //         res.status(400).json({error: err.message });
-    //         return;
-    //     }
-    //     res.json({
-    //         message: 'Dane dodane do music.db',
-    //         id: this.lastID,
-    //     });
-    // });
+    res.json({ token: token }); // Wysyłanie tokenu do klienta
 });
+
 app.listen(port, ()=> {
-    console.log(`App słucha http://loclhost:${port}`)
+    console.log(`App słucha http://localhost:${port}`)
 })
 
