@@ -12,13 +12,15 @@ import { HomeComponent } from './home/home.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUserComponent } from './add-user/add-user.component';
+import { AddTrackComponent } from './add-track/add-track.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginPageComponent,
     InfoComponent,
     HomeComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddTrackComponent
   ],
   imports: [
     FormsModule,

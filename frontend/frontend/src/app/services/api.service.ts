@@ -31,6 +31,15 @@ export class ApiService {
       return EMPTY;
     }));
   }
+
+  public addTrack(data: any):Observable<any>{
+    return this.http.post<any>(`${this.url}/add-track`, data, this.
+    httpOptions).pipe(catchError(err=>{
+      console.log(err);
+      return EMPTY;
+    }));
+  }
+
   public deleteTrack(index:number):Observable<any>{
     return this.http.delete(`${this.url}/data/${index}`).pipe(
       catchError((error) => {

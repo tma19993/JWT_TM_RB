@@ -1,14 +1,13 @@
 <button (click)="logout()">Wyloguj</button>
-<section style="display: flex;">
-  <section class="admin" *ngIf="(checkIsAdmin() | async);" >
+  <section class="admin" *ngIf="!(checkIsAdmin() | async);" >
     <div>
         <h2 style="text-align: center;">Dodawanie użytkownia</h2>
         <app-add-user></app-add-user>
     </div>
-    <div>
-        <!-- <h2 style="text-align: center;">Dodawanie muzyki</h2> -->
-        <!-- <app-add-user></app-add-user> -->
-    </div>
+    <div id="trackForm">
+      <h2 style="text-align: center;">Dodawanie muzyki</h2>
+      <app-add-track></app-add-track>
+    </div> 
     </section>
 <section  class="user">
     <div>
@@ -38,5 +37,4 @@
           </tbody>
         </table>
       </div>
-</section>
 </section>

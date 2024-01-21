@@ -1,0 +1,29 @@
+<form [formGroup]="addDataForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" formControlName="title" required>
+    </div>
+    
+    <div>
+      <label for="artist">Artist:</label>
+      <input type="text" id="artist" formControlName="artist" required>
+    </div>
+    
+    <div>
+      <label for="album">Album:</label>
+      <input type="text" id="album" formControlName="album" required>
+    </div>
+    
+    <div>
+      <label for="genre">Genre:</label>
+      <input type="text" id="genre" formControlName="genre" required>
+    </div>
+    
+    <div>
+      <label for="time">Time:</label>
+      <input type="text" id="time" formControlName="time" required>
+    </div>
+    
+    <button type="submit">Submit</button>
+  </form>
+  
