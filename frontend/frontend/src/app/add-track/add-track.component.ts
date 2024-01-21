@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-add-track',
@@ -29,8 +30,8 @@ export class AddTrackComponent {
   onSubmit(): void {
     if (this.addDataForm.valid) {
       const formData = this.addDataForm.value;
-      console.log('Form submitted with data:', formData);
-     this.api.addTrack(formData).subscribe();
+      this.api.addTrack(formData).pipe(finalize(()=>window.location.reload())).subscribe();
+      
     }
   }
 
