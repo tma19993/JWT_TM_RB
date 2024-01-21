@@ -8,7 +8,7 @@ import { ApiService } from '../services/api.service';
 })
 export class AddUserComponent {
  public userForm: FormGroup;
-
+public response: {message: string};
   constructor(
     public apiService: ApiService,
     private formBuilder: FormBuilder
@@ -22,14 +22,16 @@ export class AddUserComponent {
       haslo: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       telefon: ['', Validators.required],
-      czyAdmin: [false] // domyślnie niezaznaczony
+      czyAdmin: [false] 
     });
   }
 
   onSubmit() {
     if (this.userForm.valid) {
       this.userForm.controls["czyAdmin"].setValue( Number(Boolean(this.userForm.controls["czyAdmin"].value)))
-      this.apiService.addUser(this.userForm.value);
+      this.apiService.addUser(this.userForm.value).subscribe(  
+      response =>this.response = response,
+      error =>this.response = error)
     }
   }
 }

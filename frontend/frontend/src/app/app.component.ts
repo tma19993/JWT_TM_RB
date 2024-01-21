@@ -6,4 +6,10 @@ import { ApiService } from './services/api.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent{}
+export class AppComponent implements OnInit{
+  ngOnInit(): void {
+    // if(localStorage.getItem('token') != null)
+    // localStorage.removeItem('token');
+  }
+
+}

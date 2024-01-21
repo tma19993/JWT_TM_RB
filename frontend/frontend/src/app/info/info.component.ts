@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Tracks } from '../models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { EMPTY, Observable, catchError, map } from 'rxjs';
 
 @Component({
   selector: 'app-info',
@@ -31,5 +31,10 @@ export class InfoComponent implements OnInit {
         return params['isAdmin'] === 'true';
       })
     );
+  }
+  public deleteTrack(index: number):void{
+    this.musicList.splice(index,1);
+    this.apiService.deleteTrack(index).pipe(catchError(err=>{console.log(err); return EMPTY;})).subscribe();
+
   }
 }

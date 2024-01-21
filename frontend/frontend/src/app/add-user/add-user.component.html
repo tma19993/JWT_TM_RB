@@ -1,3 +1,4 @@
+<p *ngIf="!!response" class="info">{{response.message}}</p>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div>
       <label for="imie">Imię:</label>

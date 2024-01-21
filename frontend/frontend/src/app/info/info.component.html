@@ -1,8 +1,13 @@
 <button (click)="logout()">Wyloguj</button>
-<section class="admin" *ngIf="!(checkIsAdmin() | async);" >
+<section style="display: flex;">
+  <section class="admin" *ngIf="(checkIsAdmin() | async);" >
     <div>
-        <h2>Dodawanie użytkownia</h2>
+        <h2 style="text-align: center;">Dodawanie użytkownia</h2>
         <app-add-user></app-add-user>
+    </div>
+    <div>
+        <!-- <h2 style="text-align: center;">Dodawanie muzyki</h2> -->
+        <!-- <app-add-user></app-add-user> -->
     </div>
     </section>
 <section  class="user">
@@ -11,22 +16,27 @@
         <table>
           <thead>
             <tr>
+              <th>Number</th>
               <th>Title</th>
               <th>Artist</th>
               <th>Album</th>
               <th>Genre</th>
               <th>Time</th>
+              <th *ngIf="(checkIsAdmin() | async);"></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let music of musicList">
+            <tr *ngFor="let music of musicList,let i = index">
+              <td>{{i +1}}</td>
               <td>{{ music.title }}</td>
               <td>{{ music.artist }}</td>
               <td>{{ music.album }}</td>
               <td>{{ music.genre }}</td>
               <td>{{ music.time }}</td>
+              <td *ngIf="(checkIsAdmin() | async);"><button (click)="deleteTrack(i)">usuń</button></td>
             </tr>
           </tbody>
         </table>
       </div>
+</section>
 </section>

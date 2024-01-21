@@ -1,11 +1,8 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-var createError = require('http-errors');
-var path = require('path');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-var cookieParser = require('cookie-parser');
 const sqlite3 = require('sqlite3').verbose();
 let data; 
 let users;
@@ -15,6 +12,27 @@ const port = 3000;
 function findUser(login, password) {
     return users.find(user => user.login == login && user.haslo == password);
   }
+
+function addUser(data){
+    dbusers.run(`INSERT INTO users (imie, nazwisko, login, haslo, email, telefon, czyAdmin) VALUES (?, ?, ?, ?, ?, ?, ?)`, 
+[data.imie, data.nazwisko, data.login, data.haslo, data.email, data.telefon, data.czyAdmin], 
+function(err) {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log(`Użytkownik dodany z ID: ${this.lastID}`);
+    }
+});
+}
+
+function removeTrack(id){
+    console.log(id);
+    db.run(`DELETE FROM tracks WHERE id=${id}`,
+    function(err) {
+        if (err) {
+            console.error(err.message);
+        }})
+}
 
 let db = new sqlite3.Database('../database/music.db', (err) => {
     if (err) {
@@ -46,7 +64,7 @@ dbusers.all(`SELECT * FROM users`,[],(err, rows) => {
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
     res.setHeader(
       "Access-Control-Allow-Headers",
       "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
@@ -57,16 +75,6 @@ app.use((req, res, next) => {
   app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/data', function(req, res){ res.send(data)})
-
-app.post('/addUser', (req, res) => {
-    const userData = req.body;
-    console.log("object");
-    const canAddUser = users.find(userData);
-    console.log(canAddUser);
-  console.log(userData); 
-
-  res.status(201).send({ message: 'Użytkownik został dodany' });
-});
 
 
 app.post('/addTrack', function(req, res){
@@ -93,12 +101,30 @@ app.post('/login', (req, res) => {
     const user = req.body;
     const foundUser = findUser(user.login, user.password);
     if(foundUser){
-        const token = jwt.sign(user, config.SECRET, { expiresIn: '2h' }); // Generowanie tokenu
-        res.json({ token: token, isAdmin: Boolean(Number(foundUser.czyAdmin))}); // Wysyłanie tokenu do klienta
+        const token = jwt.sign(user, config.SECRET, { expiresIn: '2h' });
+        res.json({ token: token, isAdmin: Boolean(Number(foundUser.czyAdmin))}); 
     }
     else{
         res.status(401).json({ message: 'Logowanie nieudane' });
     }
+});
+
+app.post('/add-user', (req, res) => {
+    const user = req.body;
+    const foundUser = findUser(user.login, user.password);
+   if(!foundUser){
+    addUser(user);
+    res.status(201).send({ message: 'Użytkownik został dodany' });
+   }else{
+    res.status(401).json({ message: 'Błąd, użytkownik nie został dodany' });
+}
+  
+});
+
+app.delete('/data/:id', function(req, res) {
+    console.log(req);
+    removeTrack(req.params.id);
+    res.send({ message: 'Dane usunięte' });
 });
 
 app.listen(port, ()=> {

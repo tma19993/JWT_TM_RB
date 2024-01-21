@@ -26,8 +26,19 @@ export class ApiService {
 
   public addUser(data: any):Observable<any>{
     console.log(data);
-    return this.http.post<any>(`${this.url}/addUser`,data, this.httpOptions)
-    // return this.http.post<any>(`${this.url}/addUser`, data,  this.httpOptions);
+    return this.http.post<any>(`${this.url}/add-user`, data, this.httpOptions).pipe(catchError(err=>{
+      console.log(err);
+      return EMPTY;
+    }));
+  }
+  public deleteTrack(index:number):Observable<any>{
+    return this.http.delete(`${this.url}/data/${index}`).pipe(
+      catchError((error) => {
+        console.error('Wystąpił błąd', error)
+        return EMPTY;
+      })
+      )
+    ;
   }
 
   public login(login: string, password: string): Observable<any> {
