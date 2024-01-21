@@ -1,5 +1,5 @@
 <button (click)="logout()">Wyloguj</button>
-  <section class="admin" *ngIf="!(checkIsAdmin() | async);" >
+  <section class="admin" *ngIf="(checkIsAdmin() | async);" >
     <div>
         <h2 style="text-align: center;">Dodawanie użytkownia</h2>
         <app-add-user></app-add-user>
