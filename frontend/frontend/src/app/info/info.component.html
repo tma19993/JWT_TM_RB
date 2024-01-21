@@ -1,7 +1,7 @@
 <button (click)="logout()">Wyloguj</button>
-  <section style="margin: 0 auto;">
+  <section style="width: 100%;">
 
-    <section class="admin" *ngIf="(checkIsAdmin() | async);" >
+    <section style="margin: 0 auto;" class="admin" *ngIf="(checkIsAdmin() | async);" >
       <div>
           <h2 style="text-align: center;">Dodawanie użytkownia</h2>
           <app-add-user></app-add-user>
@@ -11,7 +11,7 @@
         <app-add-track></app-add-track>
       </div> 
       </section>
-  <section  class="user">
+  <section class="user">
       <div>
           <h2>Lista Muzyki</h2>
           <table>
