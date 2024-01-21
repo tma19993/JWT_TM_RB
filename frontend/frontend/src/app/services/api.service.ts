@@ -33,7 +33,7 @@ export class ApiService {
   }
 
   public addTrack(data: any):Observable<any>{
-    return this.http.post<any>(`${this.url}/add-track`, data, this.
+    return this.http.post<any>(`${this.url}/addTrack`, data, this.
     httpOptions).pipe(catchError(err=>{
       console.log(err);
       return EMPTY;

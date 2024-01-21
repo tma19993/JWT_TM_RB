@@ -78,20 +78,18 @@ app.get('/data', function(req, res){ res.send(data)})
 
 
 app.post('/addTrack', function(req, res){
-    res.send('Endpoint post req')
     const data = req.body;
     const sql = 'INSERT INTO tracks (title, artist, album, genre, time) VALUES (?, ?, ?, ?, ?)';
     const params = [data.title, data.artist, data.album, data.genre, data.time];
 
     db.run(sql, params, function(err){
         if (err){
-            res.status(400).json({error: err.message });
+            res.status(400).json({error: err });
             return;
+        }else{
+            res.status(201).send({ message: 'Użytkownik został dodany' });
         }
-        res.json({
-            message: 'Dane dodane do music.db',
-            id: this.lastID,
-        });
+        
     });
 });
 
